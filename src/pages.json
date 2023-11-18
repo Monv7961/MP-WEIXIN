@@ -47,6 +47,12 @@
       "style": {
         "navigationBarTitleText": "热门推荐"
       }
+    },
+    {
+      "path": "pages/goods/goods",
+      "style": {
+        "navigationBarTitleText": "商品"
+      }
     }
   ],
   "globalStyle": {
@@ -88,7 +94,6 @@
       }
     ]
   },
-
   // 分包加载规则
   "subPackages": [
     // 子包根目录
@@ -107,6 +112,18 @@
             "navigationStyle": "custom",
             "navigationBarTextStyle": "white",
             "navigationBarTitleText": "个人信息"
+          }
+        },
+        {
+          "path": "address/address",
+          "style": {
+            "navigationBarTitleText": "地址管理"
+          }
+        },
+        {
+          "path": "address/address-form",
+          "style": {
+            "navigationBarTitleText": "编辑地址"
           }
         }
       ]
