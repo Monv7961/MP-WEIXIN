@@ -1,5 +1,30 @@
 <script setup lang="ts">
-//
+// @ts-nocheck
+import { codeToText } from '@/utils/element-china-area-data.mjs'
+// 获取收货地址列表数据
+const addressList = ref<AddressItem[]>([])
+const getMemberAddressData = async () => {
+  const res = await getMemberAddressAPI()
+  addressList.value = res.result
+}
+
+// 初始化调用(页面显示)
+onShow(() => {
+  getMemberAddressData()
+})
+
+const onDeleteAddress = (id: string) => {
+  uni.showModal({
+    content: '删除地址?',
+    success: async (res) => {
+      if (res.confirm) {
+        await deleteMemberAddressByIdAPI(id)
+      } else {
+        getMemberAddressData()
+      }
+    }
+  })
+}
 </script>
 
 <template>
@@ -7,22 +32,34 @@
     <!-- 地址列表 -->
     <scroll-view class="scroll-view" scroll-y>
       <view v-if="true" class="address">
-        <view class="address-list">
+        <uni-swipe-action class="address-list">
           <!-- 收货地址项 -->
-          <view class="item">
+          <uni-swipe-action-item class="item" v-for="item in addressList" :key="item.id">
             <view class="item-content">
               <view class="user">
-                王小力
-                <text class="contact">13111111111</text>
-                <text v-if="true" class="badge">默认</text>
+                {{ item.receiver }}
+                <text class="contact">{{ item.contact }}</text>
+                <text v-if="item.isDefault" class="badge">默认</text>
               </view>
-              <view class="locate">江苏省 南京市 栖霞区 前台端菜服务员</view>
-              <navigator class="edit" hover-class="none" :url="`/pagesMember/address/address-form?id=1`">
+              <view class="locate">
+                {{ codeToText[item.provinceCode?.replace(/0+$/, '')] }}
+                {{ codeToText[item.cityCode?.replace(/0+$/, '')] }}
+                {{ codeToText[item.countyCode?.replace(/0+$/, '')] }}
+                {{ item.address }}
+              </view>
+              <navigator
+                class="edit"
+                hover-class="none"
+                :url="`/pagesMember/address/address-form?id=${item.id}`"
+              >
                 修改
               </navigator>
             </view>
-          </view>
-        </view>
+            <template #right>
+              <button class="delete-button" @tap="onDeleteAddress(item.id)">删除</button>
+            </template>
+          </uni-swipe-action-item>
+        </uni-swipe-action>
       </view>
       <view v-else class="blank">暂无收货地址</view>
     </scroll-view>
