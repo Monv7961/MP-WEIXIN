@@ -1,40 +1,109 @@
 <script setup lang="ts">
-//
+// uniapp 获取页面参数
+const query = defineProps<{
+  type: string
+  title: string
+}>()
+console.log('query', query)
+// 动态设置标题
+uni.setNavigationBarTitle({ title: query.title })
+
+// 推荐封面图
+const bannerPicture = ref('')
+// 推荐选项
+const subTypes = ref<(SubTypeItem & { finish?: boolean })[]>([])
+// 高亮的下标
+const activeIndex = ref(0)
+// 获取热门推荐数据
+const getHotRecommendData = async () => {
+  const res = await getHotRecommendAPI({
+    page: 1,
+    pageSize: 10,
+    subType: query.type
+  })
+  // 保存封面
+  bannerPicture.value = res.result.bannerPicture
+  // 保存列表
+  subTypes.value = res.result.subTypes
+}
+
+// 页面加载
+onLoad(() => {
+  getHotRecommendData()
+})
+
+// 滚动触底
+const onScrolltolower = async () => {
+  // 获取当前选项
+  const currsubTypes = subTypes.value[activeIndex.value]
+  // 分页条件
+  if (currsubTypes.goodsItems.page < currsubTypes.goodsItems.pages) {
+    // 当前页码累加
+    currsubTypes.goodsItems.page++
+  } else {
+    // 标记已结束
+    currsubTypes.finish = true
+    // 退出并轻提示
+    return uni.showToast({ icon: 'none', title: '没有更多数据了~' })
+  }
+
+  // 调用API传参
+  const res = await getHotRecommendAPI({
+    subType: currsubTypes.id,
+    page: currsubTypes.goodsItems.page,
+    pageSize: currsubTypes.goodsItems.pageSize
+  })
+  // 新的列表选项
+  const newsubTypes = res.result.subTypes[activeIndex.value]
+  // 数组追加
+  currsubTypes.goodsItems.list.push(...newsubTypes.goodsItems.list)
+}
 </script>
 
 <template>
   <view class="viewport">
     <!-- 推荐封面图 -->
     <view class="cover">
-      <image src="@/static/images/navigator_bg.png"></image>
+      <image :src="bannerPicture"></image>
     </view>
     <!-- 推荐选项 -->
     <view class="tabs">
-      <text class="text active">抢先尝鲜</text>
-      <text class="text">新品预告</text>
+      <text
+        class="text"
+        v-for="(item, index) in subTypes"
+        :key="item.id"
+        :class="{ active: index === activeIndex }"
+        @tap="activeIndex = index"
+      >
+        {{ item.title }}
+      </text>
     </view>
     <!-- 推荐列表 -->
-    <scroll-view scroll-y class="scroll-view">
+    <scroll-view
+      scroll-y
+      class="scroll-view"
+      v-for="(item, index) in subTypes"
+      :key="item.id"
+      v-show="activeIndex === index"
+      @scrolltolower="onScrolltolower"
+    >
       <view class="goods">
         <navigator
           hover-class="none"
           class="navigator"
-          v-for="goods in 10"
-          :key="goods"
-          :url="`/pages/goods/goods?id=`"
+          v-for="goods in item.goodsItems.list"
+          :key="goods.id"
+          :url="`/pages/goods/goods?id=${goods.id}`"
         >
-          <image
-            class="thumb"
-            src="//img1.360buyimg.com/da/jfs/t1/168072/20/33221/83127/6514e9dcF8f7510e0/dfcc244cb87be585.jpg!q70.jpg"
-          ></image>
-          <view class="name ellipsis">西子,六岁啦</view>
+          <image class="thumb" :src="goods.picture"></image>
+          <view class="name ellipsis">{{ goods.name }}</view>
           <view class="price">
             <text class="symbol">¥</text>
-            <text class="number">79.00</text>
+            <text class="number">{{ goods.price }}</text>
           </view>
         </navigator>
       </view>
-      <view class="loading-text">正在加载...</view>
+      <view class="loading-text"> {{ item.finish ? '没有更多数据了~' : '正在加载...' }}</view>
     </scroll-view>
   </view>
 </template>
