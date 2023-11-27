@@ -481,31 +481,6 @@ page {
   border-radius: 10rpx;
   background-color: #fff;
 
-  .total {
-    line-height: 1;
-    font-size: 26rpx;
-    padding: 20rpx 0;
-    color: #666;
-
-    .row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10rpx 0;
-    }
-
-    .symbol::before {
-      content: '¥';
-      font-size: 80%;
-      margin-right: 3rpx;
-    }
-
-    .primary {
-      color: #cf4444;
-      font-size: 36rpx;
-    }
-  }
-
   .item {
     padding: 30rpx 0;
     border-bottom: 1rpx solid #eee;
@@ -602,6 +577,31 @@ page {
         color: #27ba9b;
         border-color: #27ba9b;
       }
+    }
+  }
+
+  .total {
+    line-height: 1;
+    font-size: 26rpx;
+    padding: 20rpx 0;
+    color: #666;
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10rpx 0;
+    }
+
+    .symbol::before {
+      content: '¥';
+      font-size: 80%;
+      margin-right: 3rpx;
+    }
+
+    .primary {
+      color: #cf4444;
+      font-size: 36rpx;
     }
   }
 }

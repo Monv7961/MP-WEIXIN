@@ -44,12 +44,14 @@ page {
   height: 100%;
   overflow: hidden;
 }
+
 .viewport {
   height: 100%;
   display: flex;
   flex-direction: column;
   background-color: #fff;
 }
+
 // tabs
 .tabs {
   display: flex;
@@ -57,9 +59,10 @@ page {
   line-height: 60rpx;
   margin: 0 10rpx;
   background-color: #fff;
-  box-shadow: 04rpx 6rpx rgba(240, 240, 240, 0.6);
+  box-shadow: 0 4rpx 6rpx rgba(240, 240, 240, 0.6);
   position: relative;
   z-index: 9;
+
   .item {
     flex: 1;
     text-align: center;
@@ -67,6 +70,7 @@ page {
     font-size: 28rpx;
     color: #262626;
   }
+
   .cursor {
     position: absolute;
     left: 0;
@@ -79,10 +83,12 @@ page {
     transition: all 0.4s;
   }
 }
+
 // swiper
 .swiper {
   background-color: #f7f7f8;
 }
+
 // 订单列表
 .orders {
   .card {
@@ -91,10 +97,12 @@ page {
     margin: 20rpx 20rpx 0;
     border-radius: 10rpx;
     background-color: #fff;
+
     &:last-child {
       padding-bottom: 40rpx;
     }
   }
+
   .status {
     display: flex;
     align-items: center;
@@ -102,13 +110,16 @@ page {
     font-size: 28rpx;
     color: #999;
     margin-bottom: 15rpx;
+
     .date {
       color: #666;
       flex: 1;
     }
+
     .primary {
       color: #ff9240;
     }
+
     .icon-delete {
       line-height: 1;
       margin-left: 10rpx;
@@ -116,9 +127,11 @@ page {
       border-left: 1rpx solid #e3e3e3;
     }
   }
+
   .goods {
     display: flex;
     margin-bottom: 20rpx;
+
     .cover {
       width: 170rpx;
       height: 170rpx;
@@ -127,6 +140,114 @@ page {
       overflow: hidden;
       position: relative;
     }
+
+    .quantity {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      line-height: 1;
+      padding: 6rpx 4rpx 6rpx 8rpx;
+      font-size: 24rpx;
+      color: #fff;
+      border-radius: 10rpx 0 0 0;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .name {
+      height: 80rpx;
+      font-size: 26rpx;
+      color: #444;
+    }
+
+    .type {
+      line-height: 1.8;
+      padding: 0 15rpx;
+      margin-top: 10rpx;
+      font-size: 24rpx;
+      align-self: flex-start;
+      border-radius: 4rpx;
+      color: #888;
+      background-color: #f7f7f8;
+    }
+
+    .more {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22rpx;
+      color: #333;
+    }
+  }
+
+  .payment {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    line-height: 1;
+    padding: 20rpx 0;
+    text-align: right;
+    color: #999;
+    font-size: 28rpx;
+    border-bottom: 1rpx solid #eee;
+
+    .quantity {
+      font-size: 24rpx;
+      margin-right: 16rpx;
+    }
+
+    .amount {
+      color: #444;
+      margin-left: 6rpx;
+    }
+
+    .symbol {
+      font-size: 20rpx;
+    }
+  }
+
+  .action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 20rpx;
+
+    .button {
+      width: 180rpx;
+      height: 60rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 20rpx;
+      border-radius: 60rpx;
+      border: 1rpx solid #ccc;
+      font-size: 26rpx;
+      color: #444;
+    }
+
+    .secondary {
+      color: #27ba9b;
+      border-color: #27ba9b;
+    }
+
+    .primary {
+      color: #fff;
+      background-color: #27ba9b;
+    }
+  }
+
+  .loading-text {
+    text-align: center;
+    font-size: 28rpx;
+    color: #666;
+    padding: 20rpx 0;
   }
 }
 </style>

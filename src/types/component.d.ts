@@ -10,4 +10,4 @@ declare module 'vue' {
 }
 
 // 组件实例类型
-export type wGuessInstance = InstanceType<typeof Guess>
+export type GuessInstance = InstanceType<typeof Guess>
